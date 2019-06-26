@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import CustomBarChart from './CustomBarChart'
-// import CustomPieChart from './CustomPieChart'
+import CustomPieChart from './CustomPieChart'
 
 function App() {
   const barData = [
@@ -23,11 +23,12 @@ function App() {
   }
 
   const pieData = [
-    { name: 'Critical', value: 40, color: '#FF56DD' },
-    { name: 'Outstanding', value: 20, color: '#8D5EAA' },
-    { name: 'Covered', value: 30, color: '#FF9718' },
-    { name: 'Open Items', value: 30, color: '#3C6FFF' },
-    { name: 'Closed Items', value: 50, color: '#9EEA00' }
+    { name: 'Covered', value: 8, color: '#FF9718' },
+    { name: 'Outstanding', value: 3, color: '#8D5EAA' },
+    { name: 'Critical', value: 5, color: '#FF56DD' },
+    { name: 'Closed Items', value: 40, color: '#9EEA00' },
+    { name: 'Open Items', value: 28, color: '#3C6FFF' },
+    { name: 'Ambot Unsa ni', value: 16, color: '#FDE42C' }
   ]
 
   return (
@@ -43,15 +44,17 @@ function App() {
         }}
         barCategoryGap='20%'
       />
-      {/* <CustomPieChart
+      <CustomPieChart
         data={pieData}
         cx={150}
         cy={150}
+        width={400}
+        height={400}
         labelLine={false}
         outerRadius={100}
         paddingAngle={2}
         dataKey='value'
-      /> */}
+      />
     </div>
   )
 }

@@ -6,13 +6,12 @@ import {
 class CustomBarChart extends PureComponent {
 
   render() {
-    const { data, colors, xDataKey = 'name', ...rest } = this.props
+    const { colors = [], xDataKey = 'name', ...rest } = this.props
     return (
       <BarChart
-        data={data}
         {...rest}
       >
-        <CartesianGrid strokeDasharray='3 3' />
+        <CartesianGrid strokeDasharray='5 5' />
         <XAxis dataKey={xDataKey} />
         <YAxis />
         {

@@ -1,35 +1,46 @@
 import React, { PureComponent } from 'react'
 import {
-  PieChart, Pie, Cell, Sector
+  PieChart, Pie, Cell, Sector, Tooltip
 } from 'recharts'
 
 class CustomPieChart extends PureComponent {
 
   render() {
-    const { data, width, height, ...rest } = this.props
+    const {
+      data,
+      width,
+      height,
+      showDefaultTooltip = true,
+      showCustomTooltip = false,
+      ...rest
+    } = this.props
+
     const RADIAN = Math.PI / 180
     const renderCustomizedLabel = ({
       cx, cy, midAngle, innerRadius, outerRadius, percent, index, value
     }) => {
-      const radius = innerRadius + (outerRadius - innerRadius) * 0.6
-      const x = cx + radius * Math.cos(-midAngle * RADIAN) + 10
-      const y = cy + radius * Math.sin(-midAngle * RADIAN) - 12
+      const radius = innerRadius + (outerRadius - innerRadius) * 0.7
+      const x = cx + radius * Math.cos(-midAngle * RADIAN)
+      const y = cy + radius * Math.sin(-midAngle * RADIAN)
     
       return (
-        <text x={x} y={y} fill='white' textAnchor={x > cx ? 'start' : 'end'} dominantBaseline='central'>
+        <text x={x} y={y} fill='white' textAnchor='middle' dominantBaseline='central'>
           {value}
         </text>
       )
     }
 
     const renderActiveShape = (props) => {
-      const { cx, cy, ...rest } = props
+      const { outerRadius, cx, cy, startAngle, endAngle, fill } = props
       return (
         <g>
           <Sector
-            cx={cx + 6}
-            cy={cy - 6}
-            {...rest}
+            cx={cx}
+            cy={cy}
+            startAngle={startAngle}
+            endAngle={endAngle}
+            outerRadius={outerRadius + 10}
+            fill={fill}
           />
         </g>
       )
@@ -37,15 +48,19 @@ class CustomPieChart extends PureComponent {
 
     return (
       <PieChart width={width} height={height}>
+        {
+          showDefaultTooltip
+          && <Tooltip />
+        }
         <Pie
           data={data}
           label={renderCustomizedLabel}
+          activeShape={(wew) => renderActiveShape({ totalIndexes: data.length, ...wew })}
           {...rest}
-          activeIndex={[1,2]}
-          activeShape={renderActiveShape}
+          activeIndex={[1,2,5]}
         >
           {
-            data.map(({ color }, index) => <Cell d='' key={`cell-${index}`} fill={color} />)
+            data.map(({ color }, index) => <Cell strokeWidth={0} key={`cell-${index}`} fill={color} />)
           }
         </Pie>
       </PieChart>

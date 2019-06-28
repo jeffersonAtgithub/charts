@@ -1,26 +1,68 @@
 import React, { PureComponent } from 'react'
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip
 } from 'recharts'
 
 class CustomBarChart extends PureComponent {
 
   render() {
-    const { colors = [], xDataKey = 'name', ...rest } = this.props
+    const {
+      data,
+      colors = [],
+      xDataKey = 'name',
+      showDefaultTooltip = true,
+      showCustomTooltip = false,
+      ...rest
+    } = this.props
     return (
-      <BarChart
-        {...rest}
-      >
-        <CartesianGrid strokeDasharray='5 5' />
-        <XAxis dataKey={xDataKey} />
-        <YAxis />
+      <>
         {
-          Object.entries(colors).map(([key, value]) => (
-            <Bar key={key} dataKey={key} fill={value} />
-          ))
+          showCustomTooltip
+          && (
+            <div className='custom-tooltip' style={{ textAlign: 'left', display: 'flex' }}>
+              {
+                data.map(each => {
+                  const eachData = Object.entries(each)
+                  return (
+                    <div>
+                      {
+                        eachData.map(([key, val]) => {
+                          return key === 'name'
+                            ? <div>{val}</div> 
+                            : (
+                              <div>
+                                <span>{val}</span>
+                                <span>{key}</span>
+                              </div>
+                            )
+                        })
+                      }
+                    </div>
+                  )
+                })
+              }
+            </div>
+          )
         }
-      </BarChart>
-    );
+        <BarChart
+          data={data}
+          {...rest}
+        >
+          <CartesianGrid strokeDasharray='5 5' />
+          <XAxis dataKey={xDataKey} />
+          {
+            showDefaultTooltip
+            && <Tooltip />
+          }
+          <YAxis />
+          {
+            Object.entries(colors).map(([key, value]) => (
+              <Bar key={key} dataKey={key} fill={value} />
+            ))
+          }
+        </BarChart>
+      </> 
+    )
   }
 }
 

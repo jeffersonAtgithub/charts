@@ -23,12 +23,12 @@ function App() {
   }
 
   const pieData = [
-    { name: 'Covered', value: 8, color: '#FF9718' },
-    { name: 'Outstanding', value: 3, color: '#8D5EAA' },
-    { name: 'Critical', value: 5, color: '#FF56DD' },
-    { name: 'Closed Items', value: 40, color: '#9EEA00' },
-    { name: 'Open Items', value: 28, color: '#3C6FFF' },
-    { name: 'Ambot Unsa ni', value: 16, color: '#FDE42C' }
+    { name: 'Covered', value: 8, color: '#FF9718', index: 0 },
+    { name: 'Outstanding', value: 3, color: '#8D5EAA', index: 1 },
+    { name: 'Critical', value: 5, color: '#FF56DD', index: 2 },
+    { name: 'Closed Items', value: 40, color: '#9EEA00', index: 3 },
+    { name: 'Open Items', value: 28, color: '#3C6FFF', index: 4 },
+    { name: 'Ambot Unsa ni', value: 16, color: '#FDE42C', index: 5 }
   ]
 
   return (
@@ -37,12 +37,14 @@ function App() {
         data={barData}
         colors={barColors}
         xDataKey='name'
+        barCategoryGap='20%'
         width={400}
         height={300}
         margin={{
           top: 100, right: 30, left: 20, bottom: 5,
         }}
-        barCategoryGap='20%'
+        showDefaultTooltip={false}
+        showCustomTooltip={true}
       />
       <CustomPieChart
         data={pieData}
@@ -52,7 +54,8 @@ function App() {
         height={400}
         labelLine={false}
         outerRadius={100}
-        paddingAngle={2}
+        showDefaultTooltip={false}
+        showCustomTooltip={true}
         dataKey='value'
       />
     </div>

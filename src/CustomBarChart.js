@@ -19,7 +19,7 @@ class CustomBarChart extends PureComponent {
         {
           showCustomTooltip
           && (
-            <div className='custom-tooltip' style={{ textAlign: 'left', display: 'flex' }}>
+            <div className='custom-tooltip' style={{ width: '500px', textAlign: 'left', display: 'flex', color: '#FFFFFF', backgroundColor: '#000000' }}>
               {
                 data.map(each => {
                   const eachData = Object.entries(each)
@@ -31,7 +31,7 @@ class CustomBarChart extends PureComponent {
                             ? <div>{val}</div> 
                             : (
                               <div>
-                                <span>{val}</span>
+                                <span style={{ padding: '2px', backgroundColor: colors[key] }}>{val}</span>
                                 <span>{key}</span>
                               </div>
                             )

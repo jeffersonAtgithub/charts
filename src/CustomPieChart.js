@@ -47,23 +47,40 @@ class CustomPieChart extends PureComponent {
     }
 
     return (
-      <PieChart width={width} height={height}>
+      <>
         {
-          showDefaultTooltip
-          && <Tooltip />
+          showCustomTooltip
+          && (
+            <div className='custom-tooltip' style={{ width: '200px', textAlign: 'left', color: '#FFFFFF', backgroundColor: '#000000' }}>
+              {
+                data.map(({ name, color, value }) => (
+                  <div>
+                    <span style={{ padding: '2px', backgroundColor: color }}>{value}</span>
+                    <span>{name}</span>
+                  </div>
+                ))
+              }
+            </div>
+          )
         }
-        <Pie
-          data={data}
-          label={renderCustomizedLabel}
-          activeShape={(wew) => renderActiveShape({ totalIndexes: data.length, ...wew })}
-          {...rest}
-          activeIndex={[1,2,5]}
-        >
+        <PieChart width={width} height={height}>
           {
-            data.map(({ color }, index) => <Cell strokeWidth={0} key={`cell-${index}`} fill={color} />)
+            showDefaultTooltip
+            && <Tooltip />
           }
-        </Pie>
-      </PieChart>
+          <Pie
+            data={data}
+            label={renderCustomizedLabel}
+            activeShape={renderActiveShape}
+            {...rest}
+            activeIndex={[1,2,5]}
+          >
+            {
+              data.map(({ color }, index) => <Cell strokeWidth={0} key={`cell-${index}`} fill={color} />)
+            }
+          </Pie>
+        </PieChart>
+      </>
     )
   }
 }
